@@ -16,7 +16,7 @@ bool isNumber(std::string &arg)
 bool isCorrectFormaIp(std::vector<std::string> &arg)
 {
     int pos = 0;
-    for (std::vector<std::string>::iterator it = arg.begin(); it != arg.end(); ++it)
+    for (auto it = arg.begin(); it != arg.end(); ++it)
     {
         if (*it == "" || it->length() > 3)
             if (!isNumber(*it))
@@ -56,15 +56,6 @@ bool more(const std::vector<uint8_t> &left, const std::vector<uint8_t> &right)
     }
     return false;
 }
-
-// void  lexicographicallySort (std::vector<std::vector<std::string> > &arg, bool(*f)(const std::vector<std::string>&, const std::vector<std::string>&)) {
-//     for (size_t i = 1; i < arg.size(); ++i) {
-//         for(size_t j = 0; j < arg.size() - i; j++) {
-//             if (f(arg.at(j), arg.at(j + 1)) == true)
-//                 swap(arg.at(j), arg.at(j + 1));
-//         }
-//     }
-// }
 
 bool fullListAddresses(std::vector<uint8_t> &arg)
 {
@@ -113,7 +104,6 @@ std::vector<uint8_t> convertrIPAddress(std::vector<std::string> &arg)
 
 int main()
 {
-    // std::vector<std::vector<std::string> > ip_pool;
     std::vector<std::vector<uint8_t> > ip_pool;
     std::string line;
     std::getline(std::cin, line);
