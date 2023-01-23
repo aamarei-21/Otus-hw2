@@ -2,6 +2,9 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
+#include <array>
+
+using ipv4 = std::array<uint8_t, 4>;
 
 bool isNumber(std::string &arg)
 {
@@ -45,7 +48,7 @@ std::vector<std::string> split(std::string &str, char sep)
     return result;
 }
 
-bool more(const std::vector<uint8_t> &left, const std::vector<uint8_t> &right)
+bool more(const ipv4 &left, const ipv4 &right)
 {
     for (size_t i = 0; i < 4; ++i)
     {
@@ -57,27 +60,29 @@ bool more(const std::vector<uint8_t> &left, const std::vector<uint8_t> &right)
     return false;
 }
 
-bool fullListAddresses(std::vector<uint8_t> &arg)
+bool fullListAddresses(ipv4 &arg)
 {
     return 1;
 }
 
-bool firstByteIsOne(std::vector<uint8_t> &arg)
+bool firstByteIsOne(ipv4 &arg)
 {
     return arg.at(0) == 1;
 }
 
-bool firstByteFortySixSecondSeventy(std::vector<uint8_t> &arg)
+bool firstByteFortySixSecondSeventy(ipv4 &arg)
 {
     return (arg.at(0) == 46 && arg.at(1) == 70);
 }
 
-bool anyByteIsFortySix(std::vector<uint8_t> &arg)
+bool anyByteIsFortySix(ipv4 &arg)
 {
-    return (arg.at(0) == 46 or arg.at(1) == 46 or arg.at(2) == 46 or arg.at(3) == 46);
+    int val = 46;
+    return std::any_of(arg.begin(), arg.end(), [&val](const auto &a){return a == val; });
+    // return (arg.at(0) == 46 or arg.at(1) == 46 or arg.at(2) == 46 or arg.at(3) == 46);
 }
 
-void outputListOfAddresses(std::vector<std::vector<uint8_t> > &arg, bool (*f)(std::vector<uint8_t> &))
+void outputListOfAddresses(std::vector<ipv4 > &arg, bool (*f)(ipv4 &))
 {
     for (auto iter = arg.begin(); iter != arg.end(); ++iter)
     {
@@ -94,17 +99,17 @@ void outputListOfAddresses(std::vector<std::vector<uint8_t> > &arg, bool (*f)(st
     }
 }
 
-std::vector<uint8_t> convertrIPAddress(std::vector<std::string> &arg)
+ipv4 convertrIPAddress(std::vector<std::string> &arg)
 {
-    std::vector<uint8_t> result;
+    ipv4 result;
     for (int i = 0; i < 4; ++i)
-        result.push_back(std::stoi(arg.at(i)));
+        result[i] = std::stoi(arg.at(i));
     return result;
 }
 
 int main()
 {
-    std::vector<std::vector<uint8_t> > ip_pool;
+    std::vector<ipv4> ip_pool;
     std::string line;
     std::getline(std::cin, line);
     while (line != "")
